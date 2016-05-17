@@ -16,7 +16,11 @@
     }
 
     // Startがクリックされたらルーレットを回す
-    $('#start_button').on('click', function(){start_spin(spin_speed)});
+    $('#start_button').on('click', function(){
+        start_spin(spin_speed);
+        $('#stop_button').show();
+        $('#start_button').hide();
+    });
 
     // ルーレットを止める
     function stop_spin() {
@@ -32,7 +36,11 @@
       }, 10);
     }
 
-    $('#stop_button').on('click', function () {stop_spin()});
+    $('#stop_button').on('click', function () {
+        stop_spin();
+        $('#start_button').show();
+        $('#stop_button').hide();
+    });
 
     function get_roulette_angle() {
       return parseFloat($('#roulette')[0].style.transform.match(/\d*\.\d*/)[0]);
