@@ -38,6 +38,7 @@
           clearInterval(spin_roulette_id);spin_roulette_id = null;
           clearInterval(brake_roulette_id);
           $('#start_button').show();
+          get_hit_number();
           start_stop = false;
         } else {
           spin_roulette(speed);
@@ -50,5 +51,16 @@
       if(spin_roulette_id !==null && start_stop === false) stop_roulette();
       $('#stop_button').hide();
     });
+
+    function check_start_stop(stop_num) {
+      
+    }
+
+    function get_hit_number() {
+      var angle = roulette_angle % 360;console.log(angle);
+      if ((0 <= angle && angle <= 59) || (301 <= angle && angle <= 360)) console.log(1);
+      if (60 <= angle && angle <= 179) console.log(3);
+      if (180 <= angle && angle <= 300) console.log(2);
+    }
   });
 }(jQuery));
