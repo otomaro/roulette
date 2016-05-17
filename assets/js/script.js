@@ -21,7 +21,11 @@
     }
 
     // Startがクリックされたらルーレットを回す
-    $('#start_button').on('click', function(){spin_roulette(spin_speed)});
+    $('#start_button').on('click', function(){
+        spin_roulette(spin_speed);
+        $('#stop_button').show();
+        $('#start_button').hide();
+    });
 
     // ルーレットは止め始めた位置から時計回りに80°進む
     // ルーレットを止める
@@ -33,6 +37,7 @@
         if (speed < 0.2){
           clearInterval(spin_roulette_id);spin_roulette_id = null;
           clearInterval(brake_roulette_id);
+          $('#start_button').show();
           start_stop = false;
         } else {
           spin_roulette(speed);
@@ -42,8 +47,8 @@
 
     // Stopがクリックされたらルーレットを止める
     $('#stop_button').on('click', function () {
-      //if(spin_roulette_id !==null && start_stop === false)
-        stop_roulette()
+      if(spin_roulette_id !==null && start_stop === false) stop_roulette();
+      $('#stop_button').hide();
     });
   });
 }(jQuery));
