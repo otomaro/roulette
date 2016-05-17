@@ -16,11 +16,24 @@
     top: 0;
     left: 0;
     right: 0;
+    top: 0;
     margin: 0 auto;
-    z-index: 1;
+    z-index: 2;
 }
-
-.rolette{
+#rolette{
     width: 50%;
     z-index: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30px;
+    margin: 0 auto;
+}
+#roulette_1,#roulette_2,#roulette_3{
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 80px;
+    margin: 0 auto;
 }
