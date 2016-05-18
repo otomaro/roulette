@@ -31,6 +31,7 @@
     // ルーレットを止める
     function stop_roulette() {
       var speed = spin_speed;
+      // var light = setInterval("roulette_light()",500);
       start_stop = true;
       brake_roulette_id = setInterval(function() {
         speed /= 1.2;
@@ -38,12 +39,13 @@
           clearInterval(spin_roulette_id);spin_roulette_id = null;
           clearInterval(brake_roulette_id);
           $('#start_button').show();
+          setInterval(test01,500);
           get_hit_number();
           start_stop = false;
         } else {
           spin_roulette(speed);
         }
-      }, 100);
+      }, 100);]
     }
 
     // Stopがクリックされたらルーレットを止める
@@ -52,10 +54,15 @@
       $('#stop_button').hide();
     });
 
-    function check_start_stop(stop_num) {
-      
-    }
+    // function check_start_stop(stop_num) {
+    //
+    // }
 
+    function test01() {
+      $('#roulette').toggle();
+      $('#roulette_1').toggle();
+    }
+    
     function get_hit_number() {
       var angle = roulette_angle % 360;console.log(angle);
       if ((0 <= angle && angle <= 59) || (301 <= angle && angle <= 360)) console.log(1);
