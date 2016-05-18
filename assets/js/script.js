@@ -43,12 +43,11 @@
             $('#start_button').show();
             get_roulette_number_by_angle(roulette_angle);
             start_stop = false;console.log(roulette_angle-x);
-          setInterval(test01,500);
           } else {
             spin_roulette(speed);
           }
         }
-      }, 100);]
+      }, 100);
     }
 
     // Stopがクリックされたらルーレットを止める
@@ -69,7 +68,7 @@
     });
 
     function check_start_stop(stop_num,check_id) {
-      console.log(roulette_angle + ' : ' + get_stop_number_by_angle(roulette_angle) + ' : ' + stop_num);
+      console.log(roulette_angle%360 + ' : ' + get_stop_number_by_angle(roulette_angle) + ' : ' + stop_num);
       if(get_stop_number_by_angle(roulette_angle) === stop_num){
         clearInterval(check_id);
         return true;
