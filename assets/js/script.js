@@ -11,6 +11,9 @@
 
     // ルーレットを回す
     function spin_roulette (speed) {
+        if (!start_stop && roulette_angle%360 > stop_angle && roulette_angle%360 < stop_angle+120){
+start_stop
+        }
       clearInterval(spin_roulette_id);
       spin_roulette_id = setInterval(function () {
         cnt++;
@@ -31,10 +34,8 @@
     // ルーレットを止める
     function stop_roulette(num) {var x;
       var speed = spin_speed;
-      var clear_id = setInterval(function () {
-        start_stop = check_start_stop(num,clear_id);
-      }, 50);
-      brake_roulette_id = setInterval(function() {
+      brake_roulette_id = setInterval(function() {console.log(1);
+
         if (start_stop) {if(x==undefined)x = roulette_angle;console.log(roulette_angle%360);
           speed /= 1.2;
           if (speed < 0.2){
@@ -49,7 +50,7 @@
         }
       }, 100);
     }
-
+var stop_angle;
     // Stopがクリックされたらルーレットを止める
     $(window).keypress(function(e){
       //if(spin_roulette_id !==null && start_stop === false) 
@@ -63,7 +64,16 @@
                    return 3;
         }
       }(e.keyCode));
-      stop_roulette(press_key);
+stop_angle = (function (num) {
+        switch (num) {
+          case 1:
+                   return 280;
+          case 2:
+                   return 160;
+          case 3:
+                   return 40;
+        }
+      }(press_key));
       $('#stop_button').hide();
     });
 
