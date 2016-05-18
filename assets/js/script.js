@@ -31,6 +31,7 @@
     // ルーレットを止める
     function stop_roulette(num) {var x;
       var speed = spin_speed;
+<<<<<<< HEAD
       var clear_id = setInterval(function () {
         start_stop = check_start_stop(num,clear_id);
       }, 50);
@@ -46,8 +47,23 @@
           } else {
             spin_roulette(speed);
           }
+=======
+      // var light = setInterval("roulette_light()",500);
+      start_stop = true;
+      brake_roulette_id = setInterval(function() {
+        speed /= 1.2;
+        if (speed < 0.2){
+          clearInterval(spin_roulette_id);spin_roulette_id = null;
+          clearInterval(brake_roulette_id);
+          $('#start_button').show();
+          setInterval(test01,500);
+          get_hit_number();
+          start_stop = false;
+        } else {
+          spin_roulette(speed);
+>>>>>>> e3e1d9c9dc840b7e37684388ba47e6d316f22ec8
         }
-      }, 100);
+      }, 100);]
     }
 
     // Stopがクリックされたらルーレットを止める
@@ -67,6 +83,7 @@
       $('#stop_button').hide();
     });
 
+<<<<<<< HEAD
     function check_start_stop(stop_num,check_id) {
       console.log(roulette_angle + ' : ' + get_stop_number_by_angle(roulette_angle) + ' : ' + stop_num);
       if(get_stop_number_by_angle(roulette_angle) === stop_num){
@@ -86,6 +103,22 @@
       if ((0 <= a && a<= 59) || (301 <= a && a<= 360)) return 1;
       if (60 <= a && a<= 179) return 3;
       if (180 <= a&& a<= 300) return 2;
+=======
+    // function check_start_stop(stop_num) {
+    //
+    // }
+
+    function test01() {
+      $('#roulette').toggle();
+      $('#roulette_1').toggle();
+    }
+    
+    function get_hit_number() {
+      var angle = roulette_angle % 360;console.log(angle);
+      if ((0 <= angle && angle <= 59) || (301 <= angle && angle <= 360)) console.log(1);
+      if (60 <= angle && angle <= 179) console.log(3);
+      if (180 <= angle && angle <= 300) console.log(2);
+>>>>>>> e3e1d9c9dc840b7e37684388ba47e6d316f22ec8
     }
 
   });
