@@ -22,9 +22,9 @@
 
     // Startがクリックされたらルーレットを回す
     $('#start_button').on('click', function(){
-        spin_roulette(spin_speed);
-        $('#stop_button').show();
-        $('#start_button').hide();
+      spin_roulette(spin_speed);
+      $('#stop_button').show();
+      $('#start_button').hide();
     });
 
     // ルーレットは止め始めた位置から時計回りに80°進む
@@ -38,7 +38,7 @@
           clearInterval(spin_roulette_id);spin_roulette_id = null;
           clearInterval(brake_roulette_id);
           $('#start_button').show();
-          get_hit_number();
+          get_roulette_number_by_angle(roulette_angle);
           start_stop = false;
         } else {
           spin_roulette(speed);
@@ -53,14 +53,18 @@
     });
 
     function check_start_stop(stop_num) {
+      if(get_roulette_number_by_angle() === stop_num)
+    }
+
+    function get_stop_number_by_angle(angle) {
       
     }
 
-    function get_hit_number() {
-      var angle = roulette_angle % 360;console.log(angle);
-      if ((0 <= angle && angle <= 59) || (301 <= angle && angle <= 360)) console.log(1);
-      if (60 <= angle && angle <= 179) console.log(3);
-      if (180 <= angle && angle <= 300) console.log(2);
+    function get_roulette_number_by_angle(angle) {
+      var a = angle % 360;console.log(angle);
+      if ((0 <= a && a<= 59) || (301 <= a && a<= 360)) console.log(1);
+      if (60 <= a && a<= 179) console.log(3);
+      if (180 <= a&& a<= 300) console.log(2);
     }
   });
 }(jQuery));
