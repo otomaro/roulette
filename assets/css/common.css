@@ -1,14 +1,31 @@
 .main_wrap{
     width: 100%;
     text-align: center;
+    margin-top: 80px;
 }
-.button{
+.button_wrap{
+    position: relative;
+    width: 100%;
     text-align: center;
+    margin-top: 90px;
+}
+.button_wrap #stop_button{
+    display: none;
 }
 .allow{
     position: absolute;
+    top: 0;
     left: 0;
     right: 0;
+    top: 0;
     margin: 0 auto;
-    z-index: 1;
+    z-index: 2;
+}
+#roulette{
+    z-index: 0;
+    margin: 0 auto;
+}
+#roulette_1,#roulette_2,#roulette_3{
+    display: none;
+    margin: 0 auto;
 }
