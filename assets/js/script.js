@@ -5,16 +5,35 @@
     var spin_roulette_id = null,
       spin_speed = 18,
       roulette_angle = 0,
-      start_stop = false,
-      cnt = 0,
+      start_stop = false,click_stop_button,
       brake_roulette_id = 0;
 
     // ルーレットを回す
-    function spin_roulette (speed) {
+    function spin_roulette (speed) {var x;
       clearInterval(spin_roulette_id);
+
       spin_roulette_id = setInterval(function () {
-        cnt++;
-        //if (cnt > 215) clearInterval(spin_roulette_id);
+        if (click_stop_button && !start_stop) {start_stop = check_start_stop(press_key);
+          console.log(1);
+          if( !brake_roulette_id && start_stop ){
+          console.log(2);
+          brake_roulette_id = setInterval(function() {
+            if(x==undefined)x = roulette_angle;
+              console.log(roulette_angle%360);
+              speed /= 1.2;
+              if (speed < 0.2){
+                clearInterval(spin_roulette_id);spin_roulette_id = null;
+                clearInterval(brake_roulette_id);
+                $('#start_button').show();
+                get_roulette_number_by_angle(roulette_angle);
+                start_stop = false;console.log(roulette_angle-x);
+              } else {
+                spin_roulette(speed);
+              }
+            
+          }, 100);
+          }
+        }
         roulette_angle += speed;
         $('#roulette').css('transform', 'rotate(' + roulette_angle + 'deg)');
       }, 10);
@@ -27,33 +46,24 @@
       $('#start_button').hide();
     });
 
-    // ルーレットは止め始めた位置から時計回りに260°進む
+    // ルーレットは止め始めた位置から時計回りに80°進む
     // ルーレットを止める
-    function stop_roulette(num) {var x;
+    function stop_roulette(num) {
       var speed = spin_speed;
-      var clear_id = setInterval(function () {
-        start_stop = check_start_stop(num,clear_id);
-      }, 50);
-      brake_roulette_id = setInterval(function() {
-        if (start_stop) {if(x==undefined)x = roulette_angle;console.log(roulette_angle%360);
-          speed /= 1.2;
-          if (speed < 0.2){
-            clearInterval(spin_roulette_id);spin_roulette_id = null;
-            clearInterval(brake_roulette_id);
-            $('#start_button').show();
-            get_roulette_number_by_angle(roulette_angle);
-            start_stop = false;console.log(roulette_angle-x);
-          } else {
-            spin_roulette(speed);
-          }
-        }
-      }, 100);
+//      start_stop = check_start_stop(num)
+//      var clear_id = setInterval(function () {
+//        start_stop = check_start_stop(num);
+//        if (start_stop) {
+//          clearInterval(clear_id);
+//        }
+//      }, 9);
     }
-
+var press_key;
     // Stopがクリックされたらルーレットを止める
     $(window).keypress(function(e){
+      click_stop_button = true;
       //if(spin_roulette_id !==null && start_stop === false) 
-      var press_key = (function (key_code) {
+      press_key = (function (key_code) {
         switch (key_code) {
           case 49:
                    return 1;
@@ -67,10 +77,9 @@
       $('#stop_button').hide();
     });
 
-    function check_start_stop(stop_num,check_id) {
-      console.log(roulette_angle%360 + ' : ' + get_stop_number_by_angle(roulette_angle) + ' : ' + stop_num);
+    function check_start_stop(stop_num) {
+      console.log(roulette_angle%360 + ' : ' + get_stop_number_by_angle(roulette_angle) + ' : ' + stop_num + ' ' + start_stop);
       if(get_stop_number_by_angle(roulette_angle) === stop_num){
-        clearInterval(check_id);
         return true;
       }
     }
