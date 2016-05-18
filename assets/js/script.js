@@ -14,11 +14,11 @@
 
       spin_roulette_id = setInterval(function () {
         if (click_stop_button && !start_stop) {start_stop = check_start_stop(press_key);
-          console.log(1);
+          console.log(start_stop);console.time();
           if( !brake_roulette_id && start_stop ){
-          console.log(2);
-          brake_roulette_id = setInterval(function() {
-            if(x==undefined)x = roulette_angle;
+            console.log(2);
+            brake_roulette_id = setInterval(function() {
+              if(x==undefined)x = roulette_angle;
               console.log(roulette_angle%360);
               speed /= 1.2;
               if (speed < 0.2){
@@ -30,8 +30,7 @@
               } else {
                 spin_roulette(speed);
               }
-            
-          }, 100);
+            }, 100);
           }
         }
         roulette_angle += speed;
@@ -73,7 +72,6 @@ var press_key;
                    return 3;
         }
       }(e.keyCode));
-      stop_roulette(press_key);
       $('#stop_button').hide();
     });
 
