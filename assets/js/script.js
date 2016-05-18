@@ -27,44 +27,66 @@
       $('#start_button').hide();
     });
 
-    // ルーレットは止め始めた位置から時計回りに80°進む
+    // ルーレットは止め始めた位置から時計回りに260°進む
     // ルーレットを止める
-    function stop_roulette() {
+    function stop_roulette(num) {var x;
       var speed = spin_speed;
-      start_stop = true;
+      var clear_id = setInterval(function () {
+        start_stop = check_start_stop(num,clear_id);
+      }, 50);
       brake_roulette_id = setInterval(function() {
-        speed /= 1.2;
-        if (speed < 0.2){
-          clearInterval(spin_roulette_id);spin_roulette_id = null;
-          clearInterval(brake_roulette_id);
-          $('#start_button').show();
-          get_roulette_number_by_angle(roulette_angle);
-          start_stop = false;
-        } else {
-          spin_roulette(speed);
+        if (start_stop) {if(x==undefined)x = roulette_angle;console.log(roulette_angle%360);
+          speed /= 1.2;
+          if (speed < 0.2){
+            clearInterval(spin_roulette_id);spin_roulette_id = null;
+            clearInterval(brake_roulette_id);
+            $('#start_button').show();
+            get_roulette_number_by_angle(roulette_angle);
+            start_stop = false;console.log(roulette_angle-x);
+          } else {
+            spin_roulette(speed);
+          }
         }
       }, 100);
     }
 
     // Stopがクリックされたらルーレットを止める
-    $('#stop_button').on('click', function () {
-      if(spin_roulette_id !==null && start_stop === false) stop_roulette();
+    $(window).keypress(function(e){
+      //if(spin_roulette_id !==null && start_stop === false) 
+      var press_key = (function (key_code) {
+        switch (key_code) {
+          case 49:
+                   return 1;
+          case 50:
+                   return 2;
+          case 51:
+                   return 3;
+        }
+      }(e.keyCode));
+      stop_roulette(press_key);
       $('#stop_button').hide();
     });
 
-    function check_start_stop(stop_num) {
-      if(get_roulette_number_by_angle() === stop_num)
+    function check_start_stop(stop_num,check_id) {
+      console.log(roulette_angle + ' : ' + get_stop_number_by_angle(roulette_angle) + ' : ' + stop_num);
+      if(get_stop_number_by_angle(roulette_angle) === stop_num){
+        clearInterval(check_id);
+        return true;
+      }
     }
 
+    // たまに+18degの誤差がでる
     function get_stop_number_by_angle(angle) {
-      
+      var a = angle + 80;
+      return get_roulette_number_by_angle(a);
     }
 
     function get_roulette_number_by_angle(angle) {
-      var a = angle % 360;console.log(angle);
-      if ((0 <= a && a<= 59) || (301 <= a && a<= 360)) console.log(1);
-      if (60 <= a && a<= 179) console.log(3);
-      if (180 <= a&& a<= 300) console.log(2);
+      var a = angle % 360;
+      if ((0 <= a && a<= 59) || (301 <= a && a<= 360)) return 1;
+      if (60 <= a && a<= 179) return 3;
+      if (180 <= a&& a<= 300) return 2;
     }
+
   });
 }(jQuery));
