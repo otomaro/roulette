@@ -37,7 +37,12 @@
           clearInterval(brake_roulette_id);
           $('#start_button').show();
           $('#stop_button').hide();
-          light_number = get_roulette_number();
+          light_number = (function () {
+            var a = roulette_angle % 360;
+            if ((0 <= a && a <= 59) || (300 < a && a <= 360)) return 1;
+            if (59 < a && a <= 179) return 3;
+            if (179 < a && a <= 300) return 2;
+          }());
           $('#roulette_' + light_number).css('transform', 'rotate(' + roulette_angle + 'deg)');
           light_interval_id = setInterval(function () {
             if (light_toggle_cnt < 6) {
@@ -56,12 +61,5 @@
         }
       }, 100);
     });
-
-    function get_roulette_number() {
-      var a = roulette_angle % 360;
-      if ((0 <= a && a <= 59) || (300 < a && a <= 360)) return 1;
-      if (59 < a && a <= 179) return 3;
-      if (179 < a && a <= 300) return 2;
-    }
   });
 }(jQuery));
