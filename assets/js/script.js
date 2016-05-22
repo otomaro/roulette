@@ -24,21 +24,35 @@
       $('#start_button').hide();
     });
 
-    // ルーレットは止め始めた位置から時計回りに80°進む
-    // ルーレットを止める
-
     // Stopがクリックされたらルーレットを止める
     $('#stop_button').on('click', function () {
-      var speed = spin_speed;
+      var speed = spin_speed,
+        light_number,
+        light_interval_id,
+        light_cnt = 0;
       start_stop = true;
       brake_roulette_id = setInterval(function () {
         speed /= 1.2;
         if (speed < 0.2){
-          clearInterval(spin_roulette_id);spin_roulette_id = null;
+          clearInterval(spin_roulette_id);
+          spin_roulette_id = null;
           clearInterval(brake_roulette_id);
           $('#start_button').show();
           $('#stop_button').hide();
-          console.log(get_roulette_number_by_angle());
+          light_number = get_roulette_number();
+          $('#roulette_' + light_number).css('transform', 'rotate(' + roulette_angle + 'deg)');
+          light_interval_id = setInterval(function () {
+            if (light_cnt < 6) {
+              $('#roulette').toggle();
+              $('#roulette_' + light_number).toggle();
+              light_cnt++;
+            } else if (light_cnt < 8) {
+              light_cnt++;
+            } else {
+              clearInterval(light_interval_id);
+              window.location.href = 'question.html?num=' + light_number;
+            }
+          }, 500);
           start_stop = false;
         } else {
           spin_roulette(speed);
@@ -46,29 +60,11 @@
       }, 100);
     });
 
-    function check_start_stop(stop_num,check_id) {
-      if(get_stop_number_by_angle(roulette_angle) === stop_num){
-        clearInterval(check_id);
-        return true;
-      }
-    }
-
-    function get_roulette_number_by_angle() {
+    function get_roulette_number() {
       var a = roulette_angle % 360;
       if ((0 <= a && a <= 59) || (300 < a && a <= 360)) return 1;
       if (59 < a && a <= 179) return 3;
       if (179 < a && a <= 300) return 2;
-    }
-
-    // Stopがクリックされたらルーレットを止める
-    $('#stop_button').on('click', function () {
-      if(spin_roulette_id !==null && start_stop === false) stop_roulette();
-      $('#stop_button').hide();
-    });
-
-    function test01() {
-      $('#roulette').toggle();
-      $('#roulette_1').toggle();
     }
   });
 }(jQuery));
