@@ -24,7 +24,7 @@
       $('#start_button').hide();
     });
 
-    // ルーレットは止め始めた位置から時計回りに260°進む
+    // ルーレットは止め始めた位置から時計回りに80°進む
     // ルーレットを止める
 
     // Stopがクリックされたらルーレットを止める
@@ -58,6 +58,17 @@
       if ((0 <= a && a <= 59) || (300 < a && a <= 360)) return 1;
       if (59 < a && a <= 179) return 3;
       if (179 < a && a <= 300) return 2;
+    }
+
+    // Stopがクリックされたらルーレットを止める
+    $('#stop_button').on('click', function () {
+      if(spin_roulette_id !==null && start_stop === false) stop_roulette();
+      $('#stop_button').hide();
+    });
+
+    function test01() {
+      $('#roulette').toggle();
+      $('#roulette_1').toggle();
     }
   });
 }(jQuery));
